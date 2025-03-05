@@ -6,9 +6,9 @@
     "build": "parcel build index.html"
   },
   "keywords": [],
-  "author": "enochrx",
+  "author": "enochrayx",
   "license": "ISC",
-  "description": "Recipe application",
+  "description": "Forkify Recipe application",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.13.3",
     "parcel": "^2.13.3"
