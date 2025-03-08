@@ -30,6 +30,13 @@ export class RecipeView {
     this.#parentElement.insertAdjacentHTML("afterbegin", spinnerMarkup);
   };
 
+  //method listening for event in the view
+  addHandlerRender(handler) {
+    ["hashchange", "load"].forEach(ev => window.addEventListener(ev, handler));
+    // window.addEventListener("hashchange", getRecipe);
+    // window.addEventListener("load", getRecipe);
+  } //not a private method because it needs to be part of the public API of this object so that we can then call it in the controller
+
   #generateMarkup() {
     return `
     <figure class="recipe__fig">

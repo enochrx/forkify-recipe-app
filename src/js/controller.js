@@ -2,7 +2,7 @@ import * as model from "./model.js";
 import recipeView from "./views/recipeView.js";
 
 import "core-js/actual";
-import "regenerator-runtime/runtime.js";
+// import "regenerator-runtime/runtime.js";
 
 // console.log(icons);
 
@@ -32,8 +32,8 @@ const controlRecipe = async function () {
   }
 };
 
-["hashchange", "load"].forEach(ev =>
-  window.addEventListener(ev, controlRecipe)
-);
-// window.addEventListener("hashchange", getRecipe);
-// window.addEventListener("load", getRecipe);
+//Handling events propagated from recipe view using Publisher-subscriber pattern
+const init = function () {
+  recipeView.addHandlerRender(controlRecipe);
+};
+init(); //We can also use IIFE here
