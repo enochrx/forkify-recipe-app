@@ -2,14 +2,16 @@ import * as model from "./model.js";
 import recipeView from "./views/recipeView.js";
 import searchView from "./views/searchView.js";
 import resultsView from "./views/resultsView.js";
+import paginationView from "./views/paginationView.js";
 
 import "core-js/actual";
+
 // import "regenerator-runtime/runtime.js";
 
 //hot module reloading is to prevent complete page reload rather than just update the page it is not a real JS code but it is coming from parcel
-// if (module.hot) {
-//   module.hot.accept();
-// }
+if (module.hot) {
+  module.hot.accept();
+}
 
 // NEW API URL (instead of the one shown in the video)
 // https://forkify-api.jonas.io
@@ -45,16 +47,29 @@ const controlSearchResults = async function () {
     //Load search from model
     await model.loadSearchResults(query);
 
-    //Render result
-    resultsView.render(model.getSearchResultsPage());
-  } catch {
+    //Render result -- default page is 1 otherwise not argument passed === bugs for next search
+    resultsView.render(model.getSearchResultsPage(1));
+    console.log(model.state.search.results);
+
+    //Render initial pagination
+    paginationView.render(model.state.search);
+  } catch (err) {
     console.error(err);
   }
+};
+
+const controlPagination = function (goToPage) {
+  //Render NEW result
+  resultsView.render(model.getSearchResultsPage(goToPage));
+
+  //Render NEW pagination
+  paginationView.render(model.state.search);
 };
 
 //Handling events propagated from recipe view using Publisher-subscriber pattern
 const init = function () {
   recipeView.addHandlerRender(controlRecipe);
   searchView.addHandlerSearch(controlSearchResults);
+  paginationView.addHandlerClick(controlPagination);
 };
 init(); //We can also use IIFE here
