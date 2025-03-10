@@ -9,9 +9,9 @@ import "core-js/actual";
 // import "regenerator-runtime/runtime.js";
 
 //hot module reloading is to prevent complete page reload rather than just update the page it is not a real JS code but it is coming from parcel
-if (module.hot) {
-  module.hot.accept();
-}
+// if (module.hot) {
+//   module.hot.accept();
+// }
 
 // NEW API URL (instead of the one shown in the video)
 // https://forkify-api.jonas.io
@@ -30,6 +30,9 @@ const controlRecipe = async function () {
 
     //Rendering Recipe
     recipeView.render(model.state.recipe);
+
+    // //TEST
+    // controlServings();
   } catch (err) {
     console.error(err);
     recipeView.renderError();
@@ -66,9 +69,19 @@ const controlPagination = function (goToPage) {
   paginationView.render(model.state.search);
 };
 
+const controlServings = function (newServings) {
+  //Update recipe servings (in the state)
+  model.updateServings(newServings);
+
+  //Update the recipe view
+  recipeView.render(model.state.recipe);
+  recipeView.update(model.state.recipe);
+};
+
 //Handling events propagated from recipe view using Publisher-subscriber pattern
 const init = function () {
   recipeView.addHandlerRender(controlRecipe);
+  recipeView.addHandlerUpdateServings(controlServings);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
 };

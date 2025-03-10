@@ -16,6 +16,19 @@ export class RecipeView extends View {
     // window.addEventListener("load", getRecipe);
   } //not a private method because it needs to be part of the public API of this object so that we can then call it in the controller
 
+  addHandlerUpdateServings(handler) {
+    this._parentElement.addEventListener("click", e => {
+      const btn = e.target.closest(".btn--update-servings");
+      if (!btn) return;
+      console.log(btn);
+
+      // const updateTo = +btn.dataset.updateTo;
+      const { updateTo } = btn.dataset; //alternatively using destructuring
+
+      if (+updateTo > 0) handler(+updateTo);
+    });
+  }
+
   _generateMarkup() {
     return `
     <figure class="recipe__fig">
@@ -44,15 +57,21 @@ export class RecipeView extends View {
         <span class="recipe__info-data recipe__info-data--people">${
           this._data.servings
         }</span>
-        <span class="recipe__info-text">servings</span>
+        <span class="recipe__info-text">${
+          this._data.servings === 1 ? "serving" : "servings"
+        }</span>
 
         <div class="recipe__info-buttons">
-          <button class="btn--tiny btn--increase-servings">
+          <button data-update-to="${
+            this._data.servings - 1
+          }" class="btn--tiny btn--update-servings">
             <svg>
               <use href="${icons}#icon-minus-circle"></use>
             </svg>
           </button>
-          <button class="btn--tiny btn--increase-servings">
+          <button data-update-to="${
+            this._data.servings + 1
+          }" class="btn--tiny btn--update-servings">
             <svg>
               <use href="${icons}#icon-plus-circle"></use>
             </svg>
