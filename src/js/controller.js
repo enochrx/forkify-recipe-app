@@ -3,6 +3,7 @@ import recipeView from "./views/recipeView.js";
 import searchView from "./views/searchView.js";
 import resultsView from "./views/resultsView.js";
 import paginationView from "./views/paginationView.js";
+import { DEFAULT_PAGE } from "./config.js";
 
 import "core-js/actual";
 
@@ -53,8 +54,8 @@ const controlSearchResults = async function () {
     //Load search from model
     await model.loadSearchResults(query);
 
-    //Render result -- default page is 1 otherwise not argument passed === bugs for next search
-    resultsView.render(model.getSearchResultsPage(1));
+    //Render result -- default page is 1 otherwise no argument passed === bugs for next search
+    resultsView.render(model.getSearchResultsPage(DEFAULT_PAGE));
     console.log(model.state.search.results);
 
     //Render initial pagination
@@ -81,11 +82,17 @@ const controlServings = function (newServings) {
   recipeView.update(model.state.recipe);
 };
 
+const controlAddBookmark = function () {
+  model.addBookmark(model.state.recipe);
+  console.log(model.state.recipe);
+};
+
 //Handling events propagated from recipe view using Publisher-subscriber pattern
 const init = function () {
   recipeView.addHandlerRender(controlRecipe);
   recipeView.addHandlerUpdateServings(controlServings);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
+  recipeView.addHandlerAddBookmark(controlAddBookmark);
 };
 init(); //We can also use IIFE here

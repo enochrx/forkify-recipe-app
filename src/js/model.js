@@ -1,5 +1,5 @@
 // import { async } from "regenerator-runtime";
-import { API_URL, RESULT_PER_PAGE } from "./config.js";
+import { API_URL, RESULT_PER_PAGE, DEFAULT_PAGE } from "./config.js";
 import { getJSON } from "./helpers.js";
 
 export const state = {
@@ -7,9 +7,10 @@ export const state = {
   search: {
     query: "",
     results: [],
-    page: 1,
+    page: DEFAULT_PAGE,
     resultsPerPage: RESULT_PER_PAGE,
   },
+  bookmarks: [],
 };
 
 export const loadRecipe = async function (id) {
@@ -48,6 +49,8 @@ export const loadSearchResults = async function (query) {
         image: rec.image_url,
       };
     });
+    //Alternative way to reset page to 1 after each search
+    // state.search.page = 1;
   } catch (err) {
     console.error(err);
     throw err;
@@ -68,4 +71,12 @@ export const updateServings = function (newServings) {
     ing.quantity = (ing.quantity * newServings) / state.recipe.servings;
   });
   state.recipe.servings = newServings;
+};
+
+export const addBookmark = function (recipe) {
+  //Add bookmarked recipe to state
+  state.bookmarks.push(recipe);
+
+  //Mark current recipe as bookmark
+  if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
 };
