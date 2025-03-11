@@ -25,6 +25,9 @@ const controlRecipe = async function () {
     if (!id) return;
     recipeView.renderSpinner();
 
+    //Update results view to mark selected search result
+    resultsView.update(model.getSearchResultsPage());
+
     //Loading recipe
     await model.loadRecipe(id); //an async function from model.js being called by another async function in the controller, and it will return a promise, so we have to await it but it's not returning anything so no need to store it in a new variable, instead we'll have access to state.recipe
 
@@ -74,7 +77,7 @@ const controlServings = function (newServings) {
   model.updateServings(newServings);
 
   //Update the recipe view
-  recipeView.render(model.state.recipe);
+  // recipeView.render(model.state.recipe);
   recipeView.update(model.state.recipe);
 };
 
