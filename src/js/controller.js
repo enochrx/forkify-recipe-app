@@ -82,9 +82,14 @@ const controlServings = function (newServings) {
   recipeView.update(model.state.recipe);
 };
 
-const controlAddBookmark = function () {
-  model.addBookmark(model.state.recipe);
-  console.log(model.state.recipe);
+const controlBookmark = function () {
+  if (!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
+
+  if (model.state.recipe.bookmarked)
+    model.removeBookmark(model.state.recipe.id);
+
+  console.log(model.state);
+  recipeView.update(model.state.recipe);
 };
 
 //Handling events propagated from recipe view using Publisher-subscriber pattern
@@ -93,6 +98,6 @@ const init = function () {
   recipeView.addHandlerUpdateServings(controlServings);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
-  recipeView.addHandlerAddBookmark(controlAddBookmark);
+  recipeView.addHandlerAddBookmark(controlBookmark);
 };
 init(); //We can also use IIFE here
