@@ -20,7 +20,6 @@ export class RecipeView extends View {
     this._parentElement.addEventListener("click", e => {
       const btn = e.target.closest(".btn--update-servings");
       if (!btn) return;
-      // console.log(btn);
 
       // const updateTo = +btn.dataset.updateTo;
       const { updateTo } = btn.dataset; //alternatively using destructuring
@@ -34,7 +33,6 @@ export class RecipeView extends View {
       const btn = e.target.closest(".btn--bookmark");
       if (!btn) return;
       handler();
-      console.log(btn);
     });
   }
 

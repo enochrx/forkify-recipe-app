@@ -76,12 +76,22 @@ export const updateServings = function (newServings) {
   state.recipe.servings = newServings;
 };
 
+const persistBookmarks = function () {
+  //Users can disable localStorage under browser settings, so the localStorage object is null, thus it's a good practice to wrap localStorage usage in a try catch block
+  try {
+    localStorage.setItem("bookmarks", JSON.stringify(state.bookmarks));
+  } catch (err) {
+    throw err;
+  }
+};
+
 export const addBookmark = function (recipe) {
   //Add bookmarked recipe to state
   state.bookmarks.push(recipe);
 
   //Mark current recipe as bookmarked
   if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
+  persistBookmarks();
 };
 
 export const removeBookmark = function (id) {
@@ -90,5 +100,36 @@ export const removeBookmark = function (id) {
   state.bookmarks.splice(index, 1);
 
   //Mark current recipe as NOT bookmarked
-  if (recipe.id === state.recipe.id) state.recipe.bookmarked = false;
+  if (id === state.recipe.id) state.recipe.bookmarked = false;
+  persistBookmarks();
+};
+
+const loadBookmarks = function () {
+  const storage = localStorage.getItem("bookmarks");
+  if (storage) state.bookmarks = JSON.parse(storage);
+};
+
+loadBookmarks();
+
+export const clearBookmarksStorage = function () {
+  localStorage.clear("bookmarks");
+};
+
+export const uploadRecipe = async function (newRecipe) {
+  try {
+    const ingredients = Object.entries(newRecipe)
+      .filter(entry => entry[0].startsWith("ingredient") && entry[1] !== "")
+      .map(ing => {
+        const ingArr = ing[1].replaceAll(" ", "").split(",");
+        const [quantity, unit, description] = ingArr;
+        if (ingArr.length !== 3)
+          throw new Error(
+            "Wrong ingredient format! Please use the correct format :)"
+          );
+        return { quantity: quantity ? +quantity : null, unit, description };
+      });
+    console.log(ingredients);
+  } catch (err) {
+    throw err;
+  }
 };

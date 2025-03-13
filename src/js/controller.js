@@ -3,6 +3,8 @@ import recipeView from "./views/recipeView.js";
 import searchView from "./views/searchView.js";
 import resultsView from "./views/resultsView.js";
 import paginationView from "./views/paginationView.js";
+import bookmarksView from "./views/bookmarksView.js";
+import addRecipeView from "./views/addRecipeView.js";
 import { DEFAULT_PAGE } from "./config.js";
 
 import "core-js/actual";
@@ -28,15 +30,13 @@ const controlRecipe = async function () {
 
     //Update results view to mark selected search result
     resultsView.update(model.getSearchResultsPage());
+    bookmarksView.update(model.state.bookmarks);
 
     //Loading recipe
     await model.loadRecipe(id); //an async function from model.js being called by another async function in the controller, and it will return a promise, so we have to await it but it's not returning anything so no need to store it in a new variable, instead we'll have access to state.recipe
 
     //Rendering Recipe
     recipeView.render(model.state.recipe);
-
-    // //TEST
-    // controlServings();
   } catch (err) {
     console.error(err);
     recipeView.renderError();
@@ -56,7 +56,6 @@ const controlSearchResults = async function () {
 
     //Render result -- default page is 1 otherwise no argument passed === bugs for next search
     resultsView.render(model.getSearchResultsPage(DEFAULT_PAGE));
-    console.log(model.state.search.results);
 
     //Render initial pagination
     paginationView.render(model.state.search);
@@ -82,22 +81,54 @@ const controlServings = function (newServings) {
   recipeView.update(model.state.recipe);
 };
 
-const controlBookmark = function () {
+const controlAddRemoveBookmark = function () {
+  //Add/remove bookmarks
   if (!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
-
-  if (model.state.recipe.bookmarked)
-    model.removeBookmark(model.state.recipe.id);
+  else model.removeBookmark(model.state.recipe.id);
 
   console.log(model.state);
+  //Update recipe view
   recipeView.update(model.state.recipe);
+
+  //Render bookmarks
+  bookmarksView.render(model.state.bookmarks);
+};
+
+const controlBookmarks = function () {
+  bookmarksView.render(model.state.bookmarks);
+};
+
+const controlAddRecipe = async function (newRecipe) {
+  try {
+    // console.log(newRecipe);
+
+    //Upload the new recipe data
+    await model.uploadRecipe(newRecipe);
+  } catch (err) {
+    console.error(err);
+    addRecipeView.renderError(err.message);
+  }
+
+  const recipe = {
+    title: newRecipe.title,
+    source_url: newRecipe.sourceUrl,
+    image_url: newRecipe.imageUrl,
+    publisher: newRecipe.publisher,
+    cooking_time: newRecipe.cookingTime,
+    servings: newRecipe.servings,
+  };
 };
 
 //Handling events propagated from recipe view using Publisher-subscriber pattern
 const init = function () {
+  // clearBookmarksStorage();
+
+  bookmarksView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipe);
   recipeView.addHandlerUpdateServings(controlServings);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
-  recipeView.addHandlerAddBookmark(controlBookmark);
+  recipeView.addHandlerAddBookmark(controlAddRemoveBookmark);
+  addRecipeView.addHandlerUpload(controlAddRecipe);
 };
 init(); //We can also use IIFE here
