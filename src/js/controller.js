@@ -108,15 +108,6 @@ const controlAddRecipe = async function (newRecipe) {
     console.error(err);
     addRecipeView.renderError(err.message);
   }
-
-  const recipe = {
-    title: newRecipe.title,
-    source_url: newRecipe.sourceUrl,
-    image_url: newRecipe.imageUrl,
-    publisher: newRecipe.publisher,
-    cooking_time: newRecipe.cookingTime,
-    servings: newRecipe.servings,
-  };
 };
 
 //Handling events propagated from recipe view using Publisher-subscriber pattern
