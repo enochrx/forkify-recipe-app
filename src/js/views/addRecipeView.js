@@ -26,13 +26,12 @@ class AddRecipeView extends View {
     this._parentElement.addEventListener("click", function (e) {
       e.preventDefault();
       const dataArr = [...new FormData(this)]; //Because we are inside of a handler function, this points to this._parentElement,which is of course the upload form.
-      handler(dataArr);
       const data = Object.fromEntries(dataArr);
       handler(data);
     });
   }
 
-  _generateMarkup() {}
+  // _generateMarkup() {}
 
   /////////////////////////////////////////////////
   //Alternative modal window handler

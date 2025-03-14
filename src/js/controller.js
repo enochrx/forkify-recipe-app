@@ -86,7 +86,6 @@ const controlAddRemoveBookmark = function () {
   if (!model.state.recipe.bookmarked) model.addBookmark(model.state.recipe);
   else model.removeBookmark(model.state.recipe.id);
 
-  console.log(model.state);
   //Update recipe view
   recipeView.update(model.state.recipe);
 
@@ -100,20 +99,16 @@ const controlBookmarks = function () {
 
 const controlAddRecipe = async function (newRecipe) {
   try {
-    // console.log(newRecipe);
-
     //Upload the new recipe data
     await model.uploadRecipe(newRecipe);
   } catch (err) {
-    console.error(err);
-    addRecipeView.renderError(err.message);
+    // console.error(err);
+    // addRecipeView.renderError(err.message);
   }
 };
 
 //Handling events propagated from recipe view using Publisher-subscriber pattern
 const init = function () {
-  // clearBookmarksStorage();
-
   bookmarksView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipe);
   recipeView.addHandlerUpdateServings(controlServings);
@@ -121,5 +116,6 @@ const init = function () {
   paginationView.addHandlerClick(controlPagination);
   recipeView.addHandlerAddBookmark(controlAddRemoveBookmark);
   addRecipeView.addHandlerUpload(controlAddRecipe);
+  // clearBookmarksStorage();
 };
 init(); //We can also use IIFE here
