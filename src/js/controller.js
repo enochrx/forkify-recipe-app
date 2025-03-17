@@ -5,7 +5,7 @@ import resultsView from "./views/resultsView.js";
 import paginationView from "./views/paginationView.js";
 import bookmarksView from "./views/bookmarksView.js";
 import addRecipeView from "./views/addRecipeView.js";
-import { DEFAULT_PAGE } from "./config.js";
+import { DEFAULT_PAGE, MODAL_CLOSE_TIMER_SEC } from "./config.js";
 
 import "core-js/actual";
 
@@ -99,12 +99,35 @@ const controlBookmarks = function () {
 
 const controlAddRecipe = async function (newRecipe) {
   try {
+    //Add loading spinner
+    addRecipeView.renderSpinner();
+
     //Upload the new recipe data
     await model.uploadRecipe(newRecipe);
+    console.log(model.state.recipe);
+
+    //Render recipe
+    recipeView.render(model.state.recipe);
+
+    //Success message
+    addRecipeView.renderMessage();
+
+    //Render bookmark view
+    bookmarksView.render(model.state.bookmarks);
+
+    //Change ID in url
+    window.history.pushState(null, "", `#${model.state.recipe.id}`);
+    //Close form window
+    setTimeout(function () {
+      addRecipeView.toggleWindow();
+    }, MODAL_CLOSE_TIMER_SEC * 1000);
   } catch (err) {
     // console.error(err);
     // addRecipeView.renderError(err.message);
   }
+  // setTimeout(function () {
+  //   location.reload();
+  // }, 60500);
 };
 
 //Handling events propagated from recipe view using Publisher-subscriber pattern
