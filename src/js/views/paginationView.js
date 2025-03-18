@@ -17,11 +17,21 @@ class PaginationView extends View {
     });
   }
 
+  totalPageNumber() {
+    return `
+        <div class="btn--inline pagination__btn--none">
+            <span class="btn--inline pagination__btn--none">${this._data.results.length}</span>
+        </div>`;
+  }
+
   _generateMarkup() {
     currentPage = this._data.page;
     const numPages = Math.ceil(
       this._data.results.length / this._data.resultsPerPage
     );
+
+    this.totalPageNumber();
+    // const totalPage = this._data.results.length;
 
     //Page 1, and there are other pages
     if (currentPage === 1 && numPages > 1) {

@@ -49,8 +49,6 @@ class AddRecipeView extends View {
   addHandlerUpload(handler) {
     this._parentElement.addEventListener("submit", function (e) {
       e.preventDefault();
-      const btn = e.target;
-      console.log(btn);
       const dataArr = [...new FormData(this)]; //Because we are inside of a handler function, this points to this._parentElement,which is of course the upload form.
       const data = Object.fromEntries(dataArr);
       handler(data);
@@ -61,17 +59,17 @@ class AddRecipeView extends View {
     return `<div class="upload__column">
       <h3 class="upload__heading">Recipe data</h3>
       <label>Title</label>
-      <input value="TEST123" required name="title" type="text" />
+      <input placeholder="Title" value="" required name="title" type="text" />
       <label>URL</label>
-      <input value="TEST123" required name="sourceUrl" type="text" />
+      <input placeholder="Source URL" value="" required name="sourceUrl" type="text" />
       <label>Image URL</label>
-      <input value="TEST123" required name="image" type="text" />
+      <input placeholder="Image Link/Address" value="" required name="image" type="text" />
       <label>Publisher</label>
-      <input value="TEST123" required name="publisher" type="text" />
+      <input placeholder="Publisher" value="" required name="publisher" type="text" />
       <label>Prep time</label>
-      <input value="23" required name="cookingTime" type="number" />
+      <input placeholder="Cooking Time" value="" required name="cookingTime" type="number" />
       <label>Servings</label>
-      <input value="23" required name="servings" type="number" />
+      <input placeholder="Servings" value="" required name="servings" type="number" />
     </div>
  
     <div class="upload__column">
