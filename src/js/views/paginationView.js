@@ -19,8 +19,10 @@ class PaginationView extends View {
 
   totalPageNumber() {
     return `
-        <div class="btn--inline pagination__btn--none">
-            <span class="btn--inline pagination__btn--none">${this._data.results.length}</span>
+        <div class="pagination--page__display">
+            <span">${this._data.page} / ${Math.ceil(
+      this._data.results.length / this._data.resultsPerPage
+    )}</span>
         </div>`;
   }
 
@@ -35,20 +37,20 @@ class PaginationView extends View {
 
     //Page 1, and there are other pages
     if (currentPage === 1 && numPages > 1) {
-      return nextButton();
+      return nextButton() + this.totalPageNumber();
     }
     //page 1. and there are NO other pages
     if (currentPage === 1 && numPages === 1) {
-      return "";
+      return "" + this.totalPageNumber();
     }
 
     //Last page
     if (currentPage === numPages && numPages > 1) {
-      return prevButton();
+      return prevButton() + this.totalPageNumber();
     }
     //Other page
     if (currentPage < numPages) {
-      return `${prevButton()}
+      return `${prevButton()} ${+this.totalPageNumber()}
      ${nextButton()}`;
     }
   }
