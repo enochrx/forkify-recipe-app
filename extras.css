@@ -8,3 +8,10 @@
   display: block;
   transition: all 0.2s;
 }
+
+.pagination {
+  display: flex;
+  align-items: center;
+  margin: 0 auto;
+  gap: 2.4rem;
+}
