@@ -124,7 +124,7 @@ const controlAddRecipe = async function (newRecipe) {
     }, MODAL_CLOSE_TIMER_SEC * 1000);
   } catch (err) {
     // console.error(err);
-    // addRecipeView.renderError(err.message);
+    addRecipeView.renderError(err.message);
   }
   // setTimeout(function () {
   //   location.reload();

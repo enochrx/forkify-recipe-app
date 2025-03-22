@@ -127,17 +127,39 @@ export const clearBookmarksStorage = function () {
 export const uploadRecipe = async function (newRecipe) {
   try {
     const ingredients = Object.entries(newRecipe)
-      .filter(entry => entry[0].startsWith("ingredient") && entry[1] !== "")
-      .map(ing => {
-        const ingArr = ing[1].split(",").map(el => el.trim());
-        // const ingArr = ing[1].replaceAll(" ", "").split(",");
-        if (ingArr.length !== 3)
-          throw new Error(
-            "Wrong ingredient format! Please use the correct format :)"
-          );
-        const [quantity, unit, description] = ingArr;
-        return { quantity: quantity ? +quantity : null, unit, description };
-      });
+      .filter(
+        entry =>
+          entry[0].startsWith("ingredient") &&
+          (entry[0].includes("_quantity") ||
+            entry[0].includes("_unit") ||
+            entry[0].includes("_description")) &&
+          entry[1] !== ""
+      )
+      .reduce((acc, key) => {
+        const match = key[0].match(
+          /ingredient(-\d+)(_quantity|_unit|_description)/
+        );
+
+        const index = match[1].replace("-", "") - 1;
+        const type = match[2].replace("_", "");
+
+        if (!acc[index])
+          acc[index] = { quantity: null, unit: "", description: "" };
+
+        acc[index][type] = key[1];
+
+        return acc;
+
+        // .map(ing => {
+        //   const ingArr = ing[1].split(",").map(el => el.trim());
+        //   // const ingArr = ing[1].replaceAll(" ", "").split(",");
+        //   if (ingArr.length !== 1)
+        //     throw new Error(
+        //       "Wrong ingredient format! Please use the correct format :)"
+        //     );
+        //   const [quantity, unit, description] = ingArr;
+        //   return { quantity: quantity ? +quantity : null, unit, description };
+      }, []);
 
     const recipe = {
       title: newRecipe.title,

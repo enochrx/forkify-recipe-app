@@ -37,7 +37,7 @@ class PaginationView extends View {
 
     //Page 1, and there are other pages
     if (currentPage === 1 && numPages > 1) {
-      return nextButton() + this.totalPageNumber();
+      return this.totalPageNumber().concat(nextButton());
     }
     //page 1. and there are NO other pages
     if (currentPage === 1 && numPages === 1) {
@@ -50,7 +50,7 @@ class PaginationView extends View {
     }
     //Other page
     if (currentPage < numPages) {
-      return `${prevButton()} ${+this.totalPageNumber()}
+      return `${prevButton() + this.totalPageNumber()} 
      ${nextButton()}`;
     }
   }

@@ -51,71 +51,169 @@ class AddRecipeView extends View {
       e.preventDefault();
       const dataArr = [...new FormData(this)]; //Because we are inside of a handler function, this points to this._parentElement,which is of course the upload form.
       const data = Object.fromEntries(dataArr);
+      console.log(data);
       handler(data);
     });
   }
 
   _generateFormMarkup() {
-    return `<div class="upload__column">
-      <h3 class="upload__heading">Recipe data</h3>
-      <label>Title</label>
-      <input placeholder="Title" value="" required name="title" type="text" />
-      <label>URL</label>
-      <input placeholder="Source URL" value="" required name="sourceUrl" type="text" />
-      <label>Image URL</label>
-      <input placeholder="Image Link/Address" value="" required name="image" type="text" />
-      <label>Publisher</label>
-      <input placeholder="Publisher" value="" required name="publisher" type="text" />
-      <label>Prep time</label>
-      <input placeholder="Cooking Time" value="" required name="cookingTime" type="number" />
-      <label>Servings</label>
-      <input placeholder="Servings" value="" required name="servings" type="number" />
-    </div>
- 
+    return `
     <div class="upload__column">
-      <h3 class="upload__heading">Ingredients</h3>
-      <label>Ingredient 1</label>
-      <input
-        value="0.5,kg,Rice"
-        type="text"
-        required
-        name="ingredient-1"
-        placeholder="Format: 'Quantity,Unit,Description'"
-      />
-      <label>Ingredient 2</label>
-      <input
-        value="1,,Avocado"
-        type="text"
-        name="ingredient-2"
-        placeholder="Format: 'Quantity,Unit,Description'"
-      />
-      <label>Ingredient 3</label>
-      <input
-        value=",,salt"
-        type="text"
-        name="ingredient-3"
-        placeholder="Format: 'Quantity,Unit,Description'"
-      />
-      <label>Ingredient 4</label>
-      <input
-        type="text"
-        name="ingredient-4"
-        placeholder="Format: 'Quantity,Unit,Description'"
-      />
-      <label>Ingredient 5</label>
-      <input
-        type="text"
-        name="ingredient-5"
-        placeholder="Format: 'Quantity,Unit,Description'"
-      />
-      <label>Ingredient 6</label>
-      <input
-        type="text"
-        name="ingredient-6"
-        placeholder="Format: 'Quantity,Unit,Description'"
-      />
-    </div>
- 
+          <h3 class="upload__heading">Recipe data</h3>
+          <label>Title</label>
+          <input
+            placeholder="Title"
+            value=""
+            required
+            name="title"
+            type="text"
+          />
+          <label>URL</label>
+          <input
+            placeholder="Source URL"
+            value=""
+            required
+            name="sourceUrl"
+            type="text"
+          />
+          <label>Image URL</label>
+          <input
+            placeholder="Image Link/Address"
+            value=""
+            required
+            name="image"
+            type="text"
+          />
+          <label>Publisher</label>
+          <input
+            placeholder="Publisher"
+            value=""
+            required
+            name="publisher"
+            type="text"
+          />
+          <label>Prep time</label>
+          <input
+            placeholder="Cooking Time"
+            value=""
+            required
+            name="cookingTime"
+            type="number"
+          />
+          <label>Servings</label>
+          <input
+            placeholder="Servings"
+            value=""
+            required
+            name="servings"
+            type="number"
+          />
+        </div>
+
+      <div class="upload__column">
+  <h3 class="upload__heading">Ingredients</h3>
+  <label>Ingredient 1</label>
+  <div>
+    <input
+      value=""
+      type="number"
+      pattern="[0-9]*"
+      min="0"
+      required
+      name="ingredient-1_quantity"
+      placeholder="Quantity"
+    />
+
+    <select
+      name="ingredient-1_unit"
+      id="ingredient-1_unit"
+      title="Ingredient 1 Unit"
+    >
+      <option selected disabled hidden>Unit</option>
+      <option value="gram">Gram</option>
+      <option value="milligram">Milligram</option>
+      <option value="kilogram">Kilogram</option>
+      <option value="ounce">Ounce</option>
+      <option value="pound">Pound</option>
+      <option value="litre">Litre</option>
+      <option value="millilitre">Millilitre</option>
+    </select>
+    <input
+      type="text"
+      pattern="[A-Za-z]*"
+      required
+      name="ingredient-1_description"
+      placeholder="Description"
+    />
+  </div>
+  <label>Ingredient 2</label>
+  <div>
+    <input
+      value=""
+      type="number"
+      pattern="[0-9]*"
+      min="0"
+      required
+      name="ingredient-2_quantity"
+      placeholder="Quantity"
+    />
+    <select
+      name="ingredient-2_unit"
+      id="ingredient-2_unit"
+      title="Ingredient 2 Unit"
+    >
+      <option selected disabled hidden>Unit</option>
+      <option value="gram">Gram</option>
+      <option value="milligram">Milligram</option>
+      <option value="kilogram">Kilogram</option>
+      <option value="ounce">Ounce</option>
+      <option value="pound">Pound</option>
+      <option value="litre">Litre</option>
+      <option value="millilitre">Millilitre</option>
+    </select>
+    <input
+      type="text"
+      pattern="[A-Za-z]*"
+      required
+      name="ingredient-2_description"
+      placeholder="Description"
+    />
+  </div>
+  <label>Ingredient 3</label>
+  <div>
+    <input
+      value=""
+      type="number"
+      pattern="[0-9]*"
+      min="0"
+      required
+      name="ingredient-3_quantity"
+      placeholder="Quantity"
+    />
+    <select
+      name="ingredient-3_unit"
+      id="ingredient-3_unit"
+      title="Ingredient 3 Unit"
+    >
+      <option selected disabled hidden>Unit</option>
+      <option value="gram">Gram</option>
+      <option value="milligram">Milligram</option>
+      <option value="kilogram">Kilogram</option>
+      <option value="ounce">Ounce</option>
+      <option value="pound">Pound</option>
+      <option value="litre">Litre</option>
+      <option value="millilitre">Millilitre</option>
+    </select>
+    <input
+      type="text"
+      pattern="[A-Za-z]*"
+      required
+      name="ingredient-3_description"
+      placeholder="Description"
+    />
+  </div>
+        </div>
+
     <button class="btn upload__btn">
       <svg>
         <use href="src/img/icons.svg#icon-upload-cloud"></use>
@@ -123,7 +221,6 @@ class AddRecipeView extends View {
       <span>Upload</span>
     </button>`;
   }
-  // _generateMarkup() {}
 
   ///////////////////////////////////////////////
   // Alternative modal window handler
