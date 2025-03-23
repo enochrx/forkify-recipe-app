@@ -11,7 +11,6 @@
     <link rel="shortcut icon" href="src/img/favicon.png" type="image/x-icon" />
 
     <link rel="stylesheet" href="src/sass/main.scss" />
-    <link rel="stylesheet" href="extras.css" />
     <script type="module" src="src/js/controller.js"></script>
 
     <title>forkify // Search over 1,000,000 recipes</title>
@@ -317,8 +316,9 @@
         <div class="upload__column">
           <h3 class="upload__heading">Ingredients</h3>
           <label>Ingredient 1</label>
-          <div>
+          <div class="ingredients">
             <input
+              class="field"
               value=""
               type="number"
               pattern="[0-9]*"
@@ -343,6 +343,7 @@
               <option value="millilitre">Millilitre</option>
             </select>
             <input
+              class="field"
               type="text"
               pattern="[A-Za-z]*"
               required
@@ -351,8 +352,9 @@
             />
           </div>
           <label>Ingredient 2</label>
-          <div>
+          <div class="ingredients">
             <input
+              class="field"
               value=""
               type="number"
               pattern="[0-9]*"
@@ -376,6 +378,7 @@
               <option value="millilitre">Millilitre</option>
             </select>
             <input
+              class="field"
               type="text"
               pattern="[A-Za-z]*"
               required
@@ -384,8 +387,9 @@
             />
           </div>
           <label>Ingredient 3</label>
-          <div>
+          <div class="ingredients">
             <input
+              class="field"
               value=""
               type="number"
               pattern="[0-9]*"
@@ -409,6 +413,7 @@
               <option value="millilitre">Millilitre</option>
             </select>
             <input
+              class="field"
               type="text"
               pattern="[A-Za-z]*"
               required
@@ -416,6 +421,15 @@
               placeholder="Description"
             />
           </div>
+          <button
+            class="btn--tiny add__ingredient"
+            type="button"
+            title="Add Ingredient"
+          >
+            <svg>
+              <use href="src/img/icons.svg#icon-plus-circle"></use>
+            </svg>
+          </button>
         </div>
 
         <button class="btn upload__btn">
