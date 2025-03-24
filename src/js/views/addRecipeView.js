@@ -34,8 +34,6 @@ class AddRecipeView extends View {
     ) {
       this._parentElement.innerHTML = this._generateFormMarkup();
     }
-    // const formMarkup = this._generateFormMarkup();
-    // this._parentElement.innerHTML = formMarkup;
     this._overlay.classList.toggle("hidden");
     this._window.classList.toggle("hidden");
   }
@@ -53,7 +51,6 @@ class AddRecipeView extends View {
     const ingCount = Array.from(
       this._parentElement.querySelectorAll(".ingredients")
     ).length;
-    console.log(ingCount);
     if (ingCount + 1 === MAX_INGREDIENTS) this._btnAdd.classList.add("hidden");
 
     return `
@@ -86,7 +83,7 @@ class AddRecipeView extends View {
             <input
               class="field"
               type="text"
-              pattern="[A-Za-z]*"
+              pattern="[A-Za-z ]+"
               required
               name="ingredient-${ingCount + 1}_description"
               placeholder="Description"
@@ -191,7 +188,7 @@ class AddRecipeView extends View {
       </select>
       <input
       type="text"
-      pattern="[A-Za-z]*"
+      pattern="[A-Za-z ]+"
       required
       name="ingredient-1_description"
       placeholder="Description"
@@ -224,7 +221,7 @@ class AddRecipeView extends View {
       </select>
       <input
       type="text"
-      pattern="[A-Za-z]*"
+      pattern="[A-Za-z ]+"
       required
       name="ingredient-2_description"
       placeholder="Description"
@@ -257,7 +254,7 @@ class AddRecipeView extends View {
       </select>
       <input
       type="text"
-      pattern="[A-Za-z]*"
+      pattern="[A-Za-z ]+"
       required
       name="ingredient-3_description"
       placeholder="Description"
@@ -282,7 +279,7 @@ class AddRecipeView extends View {
       handler(data);
     });
   }
-  ///////////////////////////////////////////////
+  /////////////////////////////////////////
   // Alternative modal window handler
 }
 

@@ -141,12 +141,18 @@ export const uploadRecipe = async function (newRecipe) {
         );
 
         const index = match[1].replace("-", "") - 1;
+
         const type = match[2].replace("_", "");
 
         if (!acc[index])
           acc[index] = { quantity: null, unit: "", description: "" };
 
-        acc[index][type] = key[1];
+        // Check if the description is an array and join it into a single string
+        if (type === "description" && Array.isArray(key[1])) {
+          acc[index][type] = key[1].join(", ");
+        } else {
+          acc[index][type] = key[1];
+        }
 
         return acc;
 
