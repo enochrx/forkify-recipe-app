@@ -11,6 +11,9 @@ export const state = {
     resultsPerPage: RESULT_PER_PAGE,
   },
   bookmarks: [],
+  ingredientsList: [],
+  schedules: [],
+  events: [],
 };
 
 const recipeObject = function (data) {
@@ -85,14 +88,14 @@ export const updateServings = function (newServings) {
   state.recipe.servings = newServings;
 };
 
-const persistBookmarks = function () {
-  //Users can disable localStorage under browser settings, so the localStorage object is null, thus it's a good practice to wrap localStorage usage in a try catch block
-  try {
-    localStorage.setItem("bookmarks", JSON.stringify(state.bookmarks));
-  } catch (err) {
-    throw err;
-  }
-};
+// const persistBookmarks = function () {
+//   //Users can disable localStorage under browser settings, so the localStorage object is null, thus it's a good practice to wrap localStorage usage in a try catch block
+//   try {
+//     localStorage.setItem("bookmarks", JSON.stringify(state.bookmarks));
+//   } catch (err) {
+//     throw err;
+//   }
+// };
 
 export const addBookmark = function (recipe) {
   //Add bookmarked recipe to state
@@ -100,7 +103,7 @@ export const addBookmark = function (recipe) {
 
   //Mark current recipe as bookmarked
   if (recipe.id === state.recipe.id) state.recipe.bookmarked = true;
-  persistBookmarks();
+  localStorageCentral(state.bookmarks, "bookmarks");
 };
 
 export const removeBookmark = function (id) {
@@ -110,15 +113,15 @@ export const removeBookmark = function (id) {
 
   //Mark current recipe as NOT bookmarked
   if (id === state.recipe.id) state.recipe.bookmarked = false;
-  persistBookmarks();
+  localStorageCentral(state.bookmarks, "bookmarks");
 };
 
-const loadBookmarks = function () {
-  const storage = localStorage.getItem("bookmarks");
-  if (storage) state.bookmarks = JSON.parse(storage);
-};
+// const loadBookmarks = function () {
+//   const storage = localStorage.getItem("bookmarks");
+//   if (storage) state.bookmarks = JSON.parse(storage);
+// };
 
-loadBookmarks();
+// loadBookmarks();
 
 export const clearBookmarksStorage = function () {
   localStorage.clear("bookmarks");
@@ -184,3 +187,49 @@ export const uploadRecipe = async function (newRecipe) {
     throw err;
   }
 };
+
+export const addIngredients = function (ingredients) {
+  ingredients.forEach(ing => {
+    const existingElement = state.ingredientsList.find(
+      el => el.description === ing.description
+    );
+    //If ing exists already, update its quantity
+    existingElement
+      ? (existingElement.quantity += ing.quantity)
+      : state.ingredientsList.push({ ...ing });
+  });
+
+  //saving to local storage
+  controlLocalStorage(state.ingredientsList, "ingredients");
+};
+
+export const deleteIngredient = function (index, lastIndex = 1) {
+  state.ingredientsList.splice(index, lastIndex);
+  //saving to local storage
+  controlLocalStorage(state.ingredientsList, "ingredients");
+};
+
+export const localStorageCentral = function (path, storageItem) {
+  if (!path) return;
+  try {
+    localStorage.setItem(storageItem, JSON.stringify(path));
+  } catch (err) {
+    throw err;
+  }
+};
+
+export const deleteFromStorage = function (item) {
+  localStorage.removeItem(item);
+};
+
+//initializing data in storage
+const init = function () {
+  const bookmarkStorage = localStorage.getItem("bookmark");
+  const shoppingListStorage = localStorage.getItem("ingredient");
+
+  if (bookmarkStorage) state.bookmarks = JSON.parse(bookmarkStorage);
+
+  if (shoppingListStorage)
+    state.ingredientsList = JSON.parse(shoppingListStorage);
+};
+init();

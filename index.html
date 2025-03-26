@@ -11,6 +11,7 @@
     <link rel="shortcut icon" href="src/img/favicon.png" type="image/x-icon" />
 
     <link rel="stylesheet" href="src/sass/main.scss" />
+    <link rel="stylesheet" href="extras.css" />
     <script type="module" src="src/js/controller.js"></script>
 
     <title>forkify // Search over 1,000,000 recipes</title>
@@ -80,6 +81,44 @@
                 </ul>
               </div>
             </li>
+            <li class="nav__item">
+              <button class="nav__btn nav__btn--shopping-list">
+                <div class="nav__icon">
+                  <svg>
+                    <use href="src/img/icons.svg#icon-list"></use>
+                  </svg>
+                  <span class="shop__count">0</span>
+                </div>
+                <span>Shopping</span>
+              </button>
+              <div class="shop">
+                <ul class="shop__list">
+                  <div class="message">
+                    <div>
+                      <svg>
+                        <use href="src/img/icons.svg#icon-smile"></use>
+                      </svg>
+                    </div>
+                    <p>Plan your shopping list here...</p>
+                  </div>
+                    <!-- <li>
+                     <p><span class="remove__ingredient">&#10005;</span><span>125 g</span> ball mozzarella torn into pieces</p>
+                    <hr />
+                  </li> -->
+                  <!-- <div class="shop__btn">
+                    <button class="btn--small recipe__btn shop__btn__clear">
+                      <span>&#10005;</span>
+                      <span>Clear list</span>
+                    </button>
+                    <button class="btn--small recipe__btn buy--now">
+                      <svg>
+                        <use href="src/img/icons.svg#icon-buy"></use>
+                      </svg>
+                      <span>Buy Now</span>
+                    </button>
+                  </div> -->
+
+            </li>
           </ul>
         </nav>
       </header>
@@ -106,7 +145,7 @@
            --->
         </ul>
 
-        <div class="pagination">
+        <div class="pagination page-display">
           <!-- <button class="btn--inline pagination__btn--prev">
             <svg class="search__icon">
               <use href="src/img/icons.svg#icon-arrow-left"></use>

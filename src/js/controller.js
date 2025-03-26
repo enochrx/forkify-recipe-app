@@ -5,6 +5,7 @@ import resultsView from "./views/resultsView.js";
 import paginationView from "./views/paginationView.js";
 import bookmarksView from "./views/bookmarksView.js";
 import addRecipeView from "./views/addRecipeView.js";
+import shoppingListView from "./views/shoppingListView.js";
 import { DEFAULT_PAGE, MODAL_CLOSE_TIMER_SEC } from "./config.js";
 
 import "core-js/actual";
@@ -131,6 +132,40 @@ const controlAddRecipe = async function (newRecipe) {
   // }, 60500);
 };
 
+const controlShoppingList = function () {
+  model.addIngredients(model.state.recipe.ingredients);
+
+  shoppingListView.render(model.state.ingredientsList);
+};
+
+// Delete one ingredient from SHOPPING LIST
+const deleteShopListItems = function (index, length) {
+  model.deleteIngredient(index);
+
+  if (length === 0) shoppingListView.renderMessage();
+};
+
+// When 'Clear List' is clicked, Delete ALL ingredients from SHOPPING LIST
+const deleteAllShopList = function () {
+  model.deleteIngredient(0, model.state.ingredientsList.length);
+
+  shoppingListView.renderMessage();
+};
+
+// Load ingredients from local storage when page is loaded
+const controlIngredientsStorage = function () {
+  // Loading ingredients list from storage
+  shoppingListView.render(model.state.ingredientsList);
+
+  // Add event listener at page load
+  shoppingListView.addHandlerClearList(deleteAllShopList);
+};
+
+// Calling function from model.js to remove item from local storage
+const removeLocalStorageItem = function (item) {
+  model.deleteFromStorage(item);
+};
+
 //Handling events propagated from recipe view using Publisher-subscriber pattern
 const init = function () {
   bookmarksView.addHandlerRender(controlBookmarks);
@@ -140,6 +175,7 @@ const init = function () {
   paginationView.addHandlerClick(controlPagination);
   recipeView.addHandlerAddBookmark(controlAddRemoveBookmark);
   addRecipeView.addHandlerUpload(controlAddRecipe);
+  shoppingListView.addHandlerRender(controlShoppingList);
   // clearBookmarksStorage();
 };
 init(); //We can also use IIFE here

@@ -19,8 +19,8 @@ class PaginationView extends View {
 
   totalPageNumber() {
     return `
-        <div class="pagination--page__display">
-            <span">${this._data.page} / ${Math.ceil(
+      <div class="pagination--page__display  page-display">
+      <span>${this._data.page} / ${Math.ceil(
       this._data.results.length / this._data.resultsPerPage
     )}</span>
         </div>`;
@@ -37,7 +37,7 @@ class PaginationView extends View {
 
     //Page 1, and there are other pages
     if (currentPage === 1 && numPages > 1) {
-      return this.totalPageNumber().concat(nextButton());
+      return this.totalPageNumber() + nextButton();
     }
     //page 1. and there are NO other pages
     if (currentPage === 1 && numPages === 1) {
@@ -59,7 +59,7 @@ class PaginationView extends View {
 const prevButton = () => `
 <button data-goto="${
   currentPage - 1
-}" class="btn--inline pagination__btn--prev">
+}" class="btn--inline page-display pagination__btn--prev">
 <svg class="search__icon">
 <use href="${icons}#icon-arrow-left"></use>
 </svg>
@@ -69,7 +69,7 @@ const prevButton = () => `
 const nextButton = () => `
 <button  data-goto="${
   currentPage + 1
-}"class="btn--inline pagination__btn--next">
+}" class="btn--inline page-display pagination__btn--next">
 <span>Page ${currentPage + 1}</span>
 <svg class="search__icon">
 <use href="${icons}#icon-arrow-right"></use>

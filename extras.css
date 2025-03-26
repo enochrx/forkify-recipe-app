@@ -1,0 +1,18 @@
+.pagination--page__display {
+  color: #f48982;
+  /* background-color: #f9f5f3; */
+  font-size: 1.2rem;
+  font-weight: 1000;
+  padding: 0.8rem 1.2rem;
+  border-radius: 10rem;
+  display: block;
+  transition: all 0.2s;
+}
+
+.page-display {
+  display: flex;
+  align-self: flex-end;
+  align-items: center;
+  /* margin: 0 20px; */
+  gap: 2.4rem;
+}
