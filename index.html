@@ -10,7 +10,7 @@
     />
     <link rel="shortcut icon" href="src/img/favicon.png" type="image/x-icon" />
 
-    <link rel="stylesheet" href="src/sass/main.scss" />
+    <link rel="stylesheet" href="src/sass/main.css" />
     <link rel="stylesheet" href="extras.css" />
     <script type="module" src="src/js/controller.js"></script>
 
@@ -120,8 +120,23 @@
 
             </li>
           </ul>
+          <button class="nav__hamburger">
+            <svg class="nav__icon">
+              <use href="src/img/icons.svg#icon-menu"></use>
+            </svg>
+          </button>
         </nav>
       </header>
+
+      <aside class="sidebar hidden">
+        <button class="btn--close-sidebar">&times;</button>
+        <ul class="sidebar__list">
+          <li class="sidebar__item"><a href="#">Home</a></li>
+          <li class="sidebar__item"><a href="#">Recipes</a></li>
+          <li class="sidebar__item"><a href="#">Bookmarks</a></li>
+          <li class="sidebar__item"><a href="#">Shopping List</a></li>
+        </ul>
+      </aside>
 
       <div class="search-results">
         <ul class="results">

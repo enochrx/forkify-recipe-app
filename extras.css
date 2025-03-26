@@ -1,18 +1,18 @@
-.pagination--page__display {
-  color: #f48982;
-  /* background-color: #f9f5f3; */
-  font-size: 1.2rem;
-  font-weight: 1000;
-  padding: 0.8rem 1.2rem;
-  border-radius: 10rem;
-  display: block;
-  transition: all 0.2s;
-}
+/* Error: There is no module with the namespace "base".
+ *   ,
+ * 8 |   background-image: base.$gradient;
+ *   |                     ^^^^^^^^^^^^^^
+ *   '
+ *   src\sass\_components.scss 8:21  @import
+ *   src\sass\main.scss 2:9          root stylesheet */
 
-.page-display {
-  display: flex;
-  align-self: flex-end;
-  align-items: center;
-  /* margin: 0 20px; */
-  gap: 2.4rem;
+body::before {
+  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
+      "Droid Sans Mono", monospace, monospace;
+  white-space: pre;
+  display: block;
+  padding: 1em;
+  margin-bottom: 1em;
+  border-bottom: 2px solid black;
+  content: 'Error: There is no module with the namespace "base".\a   \2577 \a 8 \2502    background-image: base.$gradient;\a   \2502                      ^^^^^^^^^^^^^^\a   \2575 \a   src\\sass\\_components.scss 8:21  @import\a   src\\sass\\main.scss 2:9          root stylesheet';
 }

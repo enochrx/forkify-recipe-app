@@ -14,6 +14,7 @@ export const state = {
   ingredientsList: [],
   schedules: [],
   events: [],
+  sidebarVisible: false,
 };
 
 const recipeObject = function (data) {
@@ -29,6 +30,10 @@ const recipeObject = function (data) {
     ingredients: recipe.ingredients,
     ...(recipe.key && { key: recipe.key }),
   };
+};
+
+export const toggleSidebar = function () {
+  state.sidebarVisible = !state.sidebarVisible;
 };
 
 export const loadRecipe = async function (id) {

@@ -1,3 +1,5 @@
+@use "base" as *;
+
 .preview {
   &__link {
     &:link,
@@ -30,7 +32,7 @@
     backface-visibility: hidden;
 
     &::before {
-      content: '';
+      content: "";
       display: block;
       height: 100%;
       width: 100%;

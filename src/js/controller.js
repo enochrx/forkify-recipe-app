@@ -6,6 +6,7 @@ import paginationView from "./views/paginationView.js";
 import bookmarksView from "./views/bookmarksView.js";
 import addRecipeView from "./views/addRecipeView.js";
 import shoppingListView from "./views/shoppingListView.js";
+import hamburgerView from "./views/hamburgerView.js";
 import { DEFAULT_PAGE, MODAL_CLOSE_TIMER_SEC } from "./config.js";
 
 import "core-js/actual";
@@ -166,6 +167,12 @@ const removeLocalStorageItem = function (item) {
   model.deleteFromStorage(item);
 };
 
+//hHamburger menu
+const controlSidebar = function () {
+  model.toggleSidebar();
+  hamburgerView.renderSidebar(model.state.sidebarVisible);
+};
+
 //Handling events propagated from recipe view using Publisher-subscriber pattern
 const init = function () {
   bookmarksView.addHandlerRender(controlBookmarks);
@@ -176,6 +183,7 @@ const init = function () {
   recipeView.addHandlerAddBookmark(controlAddRemoveBookmark);
   addRecipeView.addHandlerUpload(controlAddRecipe);
   shoppingListView.addHandlerRender(controlShoppingList);
+  hamburgerView.addHandlerHamburger(controlSidebar);
   // clearBookmarksStorage();
 };
 init(); //We can also use IIFE here

@@ -1,3 +1,10 @@
+@use "base";
+// @use "components";
+// @use "header";
+// @use "preview";
+// @use "searchResults";
+// @use "upload";
+
 .recipe {
   background-color: $color-grey-light-1;
 
@@ -10,7 +17,7 @@
     transform-origin: top;
 
     &::before {
-      content: '';
+      content: "";
       display: block;
       height: 100%;
       width: 100%;

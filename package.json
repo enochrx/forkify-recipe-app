@@ -10,8 +10,8 @@
   "license": "ISC",
   "description": "Forkify Recipe application",
   "devDependencies": {
-    "@parcel/transformer-sass": "^2.13.3",
-    "parcel": "^2.13.3"
+    "@parcel/transformer-sass": "^2.14.2",
+    "parcel": "^2.14.2"
   },
   "dependencies": {
     "core-js": "^3.41.0",
