@@ -15,12 +15,15 @@ class ShoppingListView extends View {
 
   //Markup for Shopping list View
   _generateMarkup() {
-    return this._generateMarkupShopList() + this._generateMarkupButtons();
+    return this._generateMarkupShopList()
+      .concat(this._generateMarkupButtons())
+      .concat();
   }
   // Display for how much ingredients are in SHOPPING list.
   _shopCount(count = 0) {
     this._shopCountContainer.textContent = count;
   }
+
   _generateMarkupShopList() {
     let html = this._data.reduce((acc, curr) => {
       if (!curr.description.includes(":")) {
@@ -35,7 +38,9 @@ class ShoppingListView extends View {
 
       return acc;
     }, "");
+
     this._shopCount(this._data.length);
+
     return html;
   }
 
@@ -65,6 +70,30 @@ class ShoppingListView extends View {
 
         this._shopCount();
         handler();
+      }.bind(this)
+    );
+  }
+
+  addHandlerDeleteIngredient(handler) {
+    this._parentElement.addEventListener(
+      "click",
+      function (e) {
+        const btn = e.target.closest(".remove__ingredient");
+        if (!btn) return;
+
+        const item = btn.closest("li");
+
+        const listItems = Array.from(
+          this._parentElement.querySelectorAll("li")
+        );
+
+        const index = listItems.indexOf(item);
+        item.remove();
+
+        const length = this._parentElement.querySelectorAll("li").length;
+
+        this._shopCount();
+        handler(index, length);
       }.bind(this)
     );
   }

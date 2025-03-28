@@ -136,7 +136,11 @@ const controlAddRecipe = async function (newRecipe) {
 const controlShoppingList = function () {
   model.addIngredients(model.state.recipe.ingredients);
 
+  shoppingListView.renderMessage();
+
   shoppingListView.render(model.state.ingredientsList);
+
+  console.log(model.state.ingredientsList);
 };
 
 // Delete one ingredient from SHOPPING LIST
@@ -144,12 +148,14 @@ const deleteShopListItems = function (index, length) {
   model.deleteIngredient(index);
 
   if (length === 0) shoppingListView.renderMessage();
+  shoppingListView.update(model.state.ingredientsList);
 };
 
 // When 'Clear List' is clicked, Delete ALL ingredients from SHOPPING LIST
 const deleteAllShopList = function () {
   model.deleteIngredient(0, model.state.ingredientsList.length);
 
+  shoppingListView.update(model.state.ingredientsList);
   shoppingListView.renderMessage();
 };
 
@@ -159,7 +165,7 @@ const controlIngredientsStorage = function () {
   shoppingListView.render(model.state.ingredientsList);
 
   // Add event listener at page load
-  shoppingListView.addHandlerClearList(deleteAllShopList);
+  // shoppingListView.addHandlerClearList(deleteAllShopList);
 };
 
 // Calling function from model.js to remove item from local storage
@@ -167,10 +173,30 @@ const removeLocalStorageItem = function (item) {
   model.deleteFromStorage(item);
 };
 
-//hHamburger menu
+//Hamburger menu
 const controlSidebar = function () {
-  model.toggleSidebar();
-  hamburgerView.renderSidebar(model.state.sidebarVisible);
+  const hamburger = document.querySelector(".nav__hamburger");
+  const navMobile = document.querySelector(".nav__mobile");
+  const container = document.querySelector(".recipe");
+
+  hamburger.addEventListener("click", e => {
+    const btn = e.target.closest(".nav__hamburger");
+    if (!btn) return;
+
+    hamburger.classList.toggle("active");
+
+    navMobile.classList.toggle("active");
+  });
+
+  container.addEventListener("click", () => {
+    hamburger.classList.remove("active");
+    navMobile.classList.remove("active");
+  });
+
+  document.addEventListener("keydown", e => {
+    if (e.key === "Escape") hamburger.classList.remove("active");
+    navMobile.classList.remove("active");
+  });
 };
 
 //Handling events propagated from recipe view using Publisher-subscriber pattern
@@ -182,8 +208,12 @@ const init = function () {
   paginationView.addHandlerClick(controlPagination);
   recipeView.addHandlerAddBookmark(controlAddRemoveBookmark);
   addRecipeView.addHandlerUpload(controlAddRecipe);
-  shoppingListView.addHandlerRender(controlShoppingList);
-  hamburgerView.addHandlerHamburger(controlSidebar);
-  // clearBookmarksStorage();
+  recipeView.addHandlerAddToShop(controlShoppingList);
+  shoppingListView.addHandlerRender(controlIngredientsStorage);
+  shoppingListView.addHandlerDeleteIngredient(deleteShopListItems);
+
+  controlSidebar();
+  // removeLocalStorageItem("ingredients")
+  // removeLocalStorageItem("bookmarks")
 };
 init(); //We can also use IIFE here

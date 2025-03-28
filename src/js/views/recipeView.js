@@ -36,6 +36,39 @@ export class RecipeView extends View {
     });
   }
 
+  addHandlerAddToShop(handler) {
+    this._parentElement.addEventListener("click", function (e) {
+      const btn = e.target.closest(".btn__add--shop");
+      if (!btn) return;
+
+      const html = `
+       <span>Added to list</span>
+        <svg class="search__icon">
+          <use href="${icons}#icon-check"></use>
+        </svg>
+          `;
+
+      btn.setAttribute("disabled", "disabled");
+      btn.innerHTML = "";
+      btn.insertAdjacentHTML("afterbegin", html);
+
+      //Button will be clickable after timeout
+      setTimeout(function () {
+        const html = `
+         <span>Add to shopping list</span>
+          <svg class="search__icon">
+            <use href="${icons}#icon-plus-circle"></use>
+          </svg>
+          `;
+        btn.removeAttribute("disabled");
+        btn.innerHTML = "";
+        btn.insertAdjacentHTML("afterbegin", html);
+      }, 500);
+
+      handler();
+    });
+  }
+
   _generateMarkup() {
     return `
     <figure class="recipe__fig">
@@ -106,6 +139,12 @@ export class RecipeView extends View {
         .map(this._generateMarkupIngredient)
         .join("")}
       </ul>
+       <button class="btn--small recipe__btn btn__add--shop">
+          <span>Add to shopping list</span>
+          <svg class="search__icon">
+            <use href="${icons}#icon-plus-circle"></use>
+          </svg>
+        </button>
     </div>
 
     <div class="recipe__directions">

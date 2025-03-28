@@ -6,9 +6,10 @@ class AddRecipeView extends View {
   _uploadBtn = document.querySelector(".upload__btn");
   _window = document.querySelector(".add-recipe-window");
   _overlay = document.querySelector(".overlay");
-  _btnOpen = document.querySelector(".nav__btn--add-recipe");
+  _btnOpen = document.querySelectorAll(".nav__btn--add-recipe");
   _btnClose = document.querySelector(".btn--close-modal");
   _message = "Recipe was successfully uploaded ;)";
+  _btnOpenfromSideBar = document.querySelector(".sidebar");
   _btnAdd = document.querySelector(".add__ingredient");
   constructor() {
     super();
@@ -29,17 +30,31 @@ class AddRecipeView extends View {
 
   toggleWindow() {
     if (
-      Array.from(this._parentElement.childNodes).length < 7 &&
-      Array.from(this._overlay.classList).includes("hidden")
+      Array.from(this._parentElement.childNodes).length < 7 ||
+      (Array.from(this._btnOpenfromSideBar.childNodes).length < 3 &&
+        Array.from(this._overlay.classList).includes("hidden"))
     ) {
       this._parentElement.innerHTML = this._generateFormMarkup();
     }
     this._overlay.classList.toggle("hidden");
     this._window.classList.toggle("hidden");
+    this._textSide();
   }
 
   _addHandlerShowWindow() {
-    this._btnOpen.addEventListener("click", this.toggleWindow.bind(this));
+    this._btnOpen.forEach(btn =>
+      btn.addEventListener("click", this.toggleWindow.bind(this))
+    );
+
+    console.log(this._parentElement.childNodes);
+    // console.log(this._btnOpenfromSideBar.childNodes);
+  }
+
+  _textSide() {
+    this._btnOpenfromSideBar.addEventListener("click", function (e) {
+      const btn = e.target.closest(".sidebar__list");
+      console.log(btn);
+    });
   }
 
   _addHandlerHideWindow() {

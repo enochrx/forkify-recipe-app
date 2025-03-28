@@ -19,7 +19,7 @@ class PaginationView extends View {
 
   totalPageNumber() {
     return `
-      <div class="pagination--page__display  page-display">
+      <div class="pagination--page__display  page__display">
       <span>${this._data.page} / ${Math.ceil(
       this._data.results.length / this._data.resultsPerPage
     )}</span>
@@ -59,7 +59,7 @@ class PaginationView extends View {
 const prevButton = () => `
 <button data-goto="${
   currentPage - 1
-}" class="btn--inline page-display pagination__btn--prev">
+}" class="btn--inline page__display pagination__btn--prev">
 <svg class="search__icon">
 <use href="${icons}#icon-arrow-left"></use>
 </svg>
@@ -69,7 +69,7 @@ const prevButton = () => `
 const nextButton = () => `
 <button  data-goto="${
   currentPage + 1
-}" class="btn--inline page-display pagination__btn--next">
+}" class="btn--inline page__display pagination__btn--next">
 <span>Page ${currentPage + 1}</span>
 <svg class="search__icon">
 <use href="${icons}#icon-arrow-right"></use>

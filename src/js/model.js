@@ -78,7 +78,6 @@ export const loadSearchResults = async function (query) {
 
 export const getSearchResultsPage = function (page = state.search.page) {
   state.search.page = page;
-  console.log(page);
   const start = (page - 1) * state.search.resultsPerPage; //0
   const end = page * state.search.resultsPerPage; //9
 
@@ -127,10 +126,6 @@ export const removeBookmark = function (id) {
 // };
 
 // loadBookmarks();
-
-export const clearBookmarksStorage = function () {
-  localStorage.clear("bookmarks");
-};
 
 export const uploadRecipe = async function (newRecipe) {
   try {
@@ -193,25 +188,34 @@ export const uploadRecipe = async function (newRecipe) {
   }
 };
 
-export const addIngredients = function (ingredients) {
-  ingredients.forEach(ing => {
-    const existingElement = state.ingredientsList.find(
-      el => el.description === ing.description
-    );
-    //If ing exists already, update its quantity
-    existingElement
-      ? (existingElement.quantity += ing.quantity)
-      : state.ingredientsList.push({ ...ing });
-  });
+export const addIngredients = async function (ingredients) {
+  try {
+    ingredients.forEach(ing => {
+      const existingElement = state.ingredientsList.find(
+        el => el.description === ing.description
+      );
+      //If ing exists already, update its quantity
+      existingElement
+        ? (existingElement.quantity += ing.quantity)
+        : state.ingredientsList.push({ ...ing });
+    });
 
-  //saving to local storage
-  controlLocalStorage(state.ingredientsList, "ingredients");
+    //saving to local storage
+    localStorageCentral(state.ingredientsList, "ingredients");
+  } catch (err) {
+    throw err;
+  }
 };
 
+/**
+ * Removing ingredients from shopping list
+ * @param {Number} index - Removing from what ingredient
+ * @param {Number} lastIndex - How much ingredients delete. This param is default 1 to delete one ingredient, but can also be used to delete all ingredients
+ */
 export const deleteIngredient = function (index, lastIndex = 1) {
   state.ingredientsList.splice(index, lastIndex);
-  //saving to local storage
-  controlLocalStorage(state.ingredientsList, "ingredients");
+  //Updating to local storage
+  localStorageCentral(state.ingredientsList, "ingredients");
 };
 
 export const localStorageCentral = function (path, storageItem) {
@@ -225,6 +229,7 @@ export const localStorageCentral = function (path, storageItem) {
 
 export const deleteFromStorage = function (item) {
   localStorage.removeItem(item);
+  // localStorage.clear(item);
 };
 
 //initializing data in storage
