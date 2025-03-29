@@ -182,6 +182,7 @@ const removeLocalStorageItem = function (item) {
 };
 
 console.log("Added few comments");
+console.log("Added few comments");
 //Hamburger menu
 const controlSidebar = function () {
   const hamburger = document.querySelector(".nav__hamburger");
