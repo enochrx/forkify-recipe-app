@@ -16,17 +16,7 @@ class AddRecipeView extends View {
     this._addHandlerShowWindow();
     this._addHandlerHideWindow();
     this.addHandlerAddIngredient();
-    // this.addHandlerWindowToggler();
   }
-
-  // addHandlerWindowToggler() {
-  //   [this._btnOpen, this._btnClose, this._overlay].forEach(btn =>
-  //     btn.addEventListener("click", () => {
-  //       this._overlay.classList.toggle("hidden");
-  //       this._window.classList.toggle("hidden");
-  //     })
-  //   );
-  // }
 
   toggleWindow() {
     if (
@@ -38,23 +28,12 @@ class AddRecipeView extends View {
     }
     this._overlay.classList.toggle("hidden");
     this._window.classList.toggle("hidden");
-    this._testSide();
   }
 
   _addHandlerShowWindow() {
     this._btnOpen.forEach(btn =>
       btn.addEventListener("click", this.toggleWindow.bind(this))
     );
-
-    console.log(this._parentElement.childNodes);
-    // console.log(this._btnOpenfromSideBar.childNodes);
-  }
-
-  _testSide() {
-    this._btnOpenfromSideBar.addEventListener("click", function (e) {
-      const btn = e.target.closest(".nav__item");
-      console.log(btn);
-    });
   }
 
   _addHandlerHideWindow() {
@@ -294,8 +273,6 @@ class AddRecipeView extends View {
       handler(data);
     });
   }
-  /////////////////////////////////////////
-  // Alternative modal window handler
 }
 
 export default new AddRecipeView();
