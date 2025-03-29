@@ -47,11 +47,12 @@ const controlRecipe = async function () {
     // Getting chart rendered at the end of recipe page load
     try {
       recipeView.generateNutritionChart(model.state.recipe.nutrition);
-    } catch (error) {
-      throw error;
+    } catch (err) {
+      throw err;
     }
   } catch (err) {
     console.error(err);
+
     recipeView.renderError();
   }
 };
@@ -72,7 +73,6 @@ const controlSearchResults = async function () {
 
     //Render initial pagination
     paginationView.render(model.state.search);
-    console.log(model.state.search.results.length);
   } catch (err) {
     console.error(err);
   }
@@ -118,7 +118,6 @@ const controlAddRecipe = async function (newRecipe) {
 
     //Upload the new recipe data
     await model.uploadRecipe(newRecipe);
-    console.log(model.state.recipe);
 
     //Render recipe
     recipeView.render(model.state.recipe);
@@ -150,8 +149,6 @@ const controlShoppingList = function () {
   shoppingListView.renderMessage();
 
   shoppingListView.render(model.state.ingredientsList);
-
-  console.log(model.state.ingredientsList);
 };
 
 // Delete one ingredient from SHOPPING LIST
@@ -184,6 +181,7 @@ const removeLocalStorageItem = function (item) {
   model.deleteFromStorage(item);
 };
 
+console.log("Added few comments");
 //Hamburger menu
 const controlSidebar = function () {
   const hamburger = document.querySelector(".nav__hamburger");

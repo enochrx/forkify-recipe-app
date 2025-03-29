@@ -7,7 +7,8 @@ import Chart from "chart.js/auto";
 export class RecipeView extends View {
   //Private properties/fields
   _parentElement = document.querySelector(".recipe");
-  _errorMessage = "We could not find that recipe, Please try another one!";
+  _errorMessage =
+    "Cannot find that recipe, Please try another one or try again later!";
   _message = "";
 
   //method listening for event in the view

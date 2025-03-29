@@ -44,7 +44,6 @@ export const loadRecipe = async function (id) {
     const data = await AJAX(`${API_URL}${id}?key=${API_KEY}`);
 
     state.recipe = recipeObject(data);
-    // console.log(state.recipe);
     if (state.bookmarks.some(bookmark => bookmark.id === id))
       state.recipe.bookmarked = true;
     else state.recipe.bookmarked = false;
@@ -89,13 +88,10 @@ export const recipeNutritionData = async function (query) {
 
     const id = getRecipeID.results[0]?.id;
     if (!id) throw new Error("Recipe ID not found");
-
-    console.log(getRecipeID.results[0]);
-
+    //Getting nutrition data
     const recipeData = await AJAX(
       `${API_URL_2}recipes/${id}/nutritionWidget.json?apiKey=${API_KEY_2}`
     );
-    console.log(recipeData);
 
     const nutritionData = {
       calories: recipeData.calories,
@@ -108,6 +104,7 @@ export const recipeNutritionData = async function (query) {
         percentFat: recipeData.caloricBreakdown.percentFat,
       },
     };
+    //Adding structured nutrition data to recipe in state
     state.recipe.nutrition = nutritionData;
   } catch (err) {
     throw err;

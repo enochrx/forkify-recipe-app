@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "parcel index.html",
-    "build": "parcel build index.html"
+    "build": "parcel build index.html --dist-dir ./dist"
   },
   "keywords": [],
   "author": "enochrayx",
@@ -11,7 +11,8 @@
   "description": "Forkify Recipe application",
   "devDependencies": {
     "@parcel/transformer-sass": "^2.14.2",
-    "parcel": "^2.14.2"
+    "parcel": "^2.14.2",
+    "svgo": "^3.3.2"
   },
   "dependencies": {
     "chart.js": "^4.4.8",
