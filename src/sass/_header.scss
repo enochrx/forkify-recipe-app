@@ -69,8 +69,11 @@
   position: relative;
 
   &__hamburger {
-    position: relative;
+    position: fixed;
+    top: 0;
+    right: 1%;
     display: block;
+    max-width: 20%;
     cursor: pointer;
     width: 35px;
     margin: 20 0px;

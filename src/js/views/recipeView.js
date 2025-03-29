@@ -2,6 +2,7 @@ import View from "./View.js";
 import icons from "url:../../img/icons.svg";
 // import { Fraction } from "fractional";
 import fracty from "fracty";
+import Chart from "chart.js/auto";
 
 export class RecipeView extends View {
   //Private properties/fields
@@ -147,6 +148,8 @@ export class RecipeView extends View {
         </button>
     </div>
 
+    ${this._generateMarkupNutrition()}
+
     <div class="recipe__directions">
       <h2 class="heading--2">How to cook it</h2>
       <p class="recipe__directions-text">
@@ -185,6 +188,55 @@ export class RecipeView extends View {
       </div>
     </li>
   `;
+  }
+
+  _generateMarkupNutrition() {
+    return `
+     <div class="recipe__nutrition">
+        <h2 class="heading--2">Nutrition Data</h2>
+        <div class="nutrition__data">
+          <canvas id="nutrition_chart"></canvas>
+          <div class="nutrition__quantity">
+            <p class="calories__text">Calories:</p>
+            <span class="calories__data">${this._data.nutrition.calories}</span>
+            <hr>
+            <p>Carbs: <span>${this._data.nutrition.carbs} - ${this._data.nutrition.caloricBreakdown.percentCarbs}%</span></p>
+            <p>Protein: <span>${this._data.nutrition.protein} - ${this._data.nutrition.caloricBreakdown.percentProtein}%</span></p>
+            <p>Fat: <span>${this._data.nutrition.fat} - ${this._data.nutrition.caloricBreakdown.percentFat}%</span></p>
+          </div>
+        </div>
+      </div>
+    `;
+  }
+
+  // Put all Nutrition Data in CHART format. Used extension: Chart.js
+  generateNutritionChart(recipeNutrition) {
+    const _canvas = document.getElementById("nutrition_chart");
+
+    // Get rid of error reusing canvas
+    if (Chart.getChart(_canvas)) Chart.getChart(_canvas).destroy();
+
+    const chart = new Chart(_canvas, {
+      type: "polarArea",
+      data: {
+        labels: ["Carbohydrate", "Protein", "Fat"],
+        datasets: [
+          {
+            label: "Nutrition Breakdown",
+            data: [
+              recipeNutrition.caloricBreakdown.percentCarbs,
+              recipeNutrition.caloricBreakdown.percentProtein,
+              recipeNutrition.caloricBreakdown.percentFat,
+            ],
+            backgroundColor: ["#d3c7c3", "#f48982", "#fbdb89"],
+            hoverOffset: 4,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+      },
+    });
   }
 }
 

@@ -1,7 +1,9 @@
 export const API_URL = "https://forkify-api.jonas.io/api/v2/recipes/";
+export const API_URL_2 = "https://api.spoonacular.com/";
 export const TIMEOUT_SEC = 10;
 export const RESULT_PER_PAGE = 10;
 export const DEFAULT_PAGE = 1;
 export const API_KEY = "a6f3b2bb-dbc2-44d5-9877-0d966f851636";
+export const API_KEY_2 = "61ce3c803a6145c99ff3e946ccf311e4";
 export const MODAL_CLOSE_TIMER_SEC = 2;
 export const MAX_INGREDIENTS = 10;

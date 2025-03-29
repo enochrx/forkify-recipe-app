@@ -1,5 +1,12 @@
 // import { async } from "regenerator-runtime";
-import { API_URL, RESULT_PER_PAGE, DEFAULT_PAGE, API_KEY } from "./config.js";
+import {
+  API_URL,
+  RESULT_PER_PAGE,
+  DEFAULT_PAGE,
+  API_KEY,
+  API_URL_2,
+  API_KEY_2,
+} from "./config.js";
 import { AJAX } from "./helpers.js";
 
 export const state = {
@@ -30,10 +37,6 @@ const recipeObject = function (data) {
     ingredients: recipe.ingredients,
     ...(recipe.key && { key: recipe.key }),
   };
-};
-
-export const toggleSidebar = function () {
-  state.sidebarVisible = !state.sidebarVisible;
 };
 
 export const loadRecipe = async function (id) {
@@ -72,6 +75,41 @@ export const loadSearchResults = async function (query) {
     // state.search.page = 1;
   } catch (err) {
     console.error(err);
+    throw err;
+  }
+};
+
+// Getting nutriotion data to calculate: CALORIES, CARBS, FAT and PROTEIN
+export const recipeNutritionData = async function (query) {
+  try {
+    // Getting recipe id
+    const getRecipeID = await AJAX(
+      `${API_URL_2}recipes/complexSearch?query=${query}&number=10&addRecipeInformation=true&addRecipeNutrition=true&apiKey=${API_KEY_2}`
+    );
+
+    const id = getRecipeID.results[0]?.id;
+    if (!id) throw new Error("Recipe ID not found");
+
+    console.log(getRecipeID.results[0]);
+
+    const recipeData = await AJAX(
+      `${API_URL_2}recipes/${id}/nutritionWidget.json?apiKey=${API_KEY_2}`
+    );
+    console.log(recipeData);
+
+    const nutritionData = {
+      calories: recipeData.calories,
+      carbs: recipeData.carbs,
+      protein: recipeData.protein,
+      fat: recipeData.fat,
+      caloricBreakdown: {
+        percentCarbs: recipeData.caloricBreakdown.percentCarbs,
+        percentProtein: recipeData.caloricBreakdown.percentProtein,
+        percentFat: recipeData.caloricBreakdown.percentFat,
+      },
+    };
+    state.recipe.nutrition = nutritionData;
+  } catch (err) {
     throw err;
   }
 };

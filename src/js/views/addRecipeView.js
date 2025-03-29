@@ -38,7 +38,7 @@ class AddRecipeView extends View {
     }
     this._overlay.classList.toggle("hidden");
     this._window.classList.toggle("hidden");
-    this._textSide();
+    this._testSide();
   }
 
   _addHandlerShowWindow() {
@@ -50,9 +50,9 @@ class AddRecipeView extends View {
     // console.log(this._btnOpenfromSideBar.childNodes);
   }
 
-  _textSide() {
+  _testSide() {
     this._btnOpenfromSideBar.addEventListener("click", function (e) {
-      const btn = e.target.closest(".sidebar__list");
+      const btn = e.target.closest(".nav__item");
       console.log(btn);
     });
   }
