@@ -1,7 +1,6 @@
 import View from "./View";
 import icons from "url:../../img/icons.svg";
 
-//Obsolete class
 class HamburgerView extends View {
   _sidebar = document.querySelector(".sidebar");
   closeSidebarBtn = document.querySelector(".btn--close-sidebar");
@@ -135,5 +134,4 @@ class HamburgerView extends View {
   //   });
   // }
 }
-
 export default new HamburgerView();

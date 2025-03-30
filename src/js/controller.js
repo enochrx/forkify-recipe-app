@@ -173,16 +173,14 @@ const controlIngredientsStorage = function () {
   shoppingListView.render(model.state.ingredientsList);
 
   // Add event listener at page load
-  // shoppingListView.addHandlerClearList(deleteAllShopList);
+  shoppingListView.addHandlerClearList(deleteAllShopList);
 };
 
 // Calling function from model.js to remove item from local storage
-const removeLocalStorageItem = function (item) {
-  model.deleteFromStorage(item);
-};
+// const removeLocalStorageItem = function (item) {
+//   model.deleteFromStorage(item);
+// };
 
-console.log("Added few comments");
-console.log("Added few comments");
 //Hamburger menu
 const controlSidebar = function () {
   const hamburger = document.querySelector(".nav__hamburger");
